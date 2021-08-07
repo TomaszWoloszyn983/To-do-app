@@ -1,0 +1,23 @@
+{
+  "groups": [
+    {
+      "name": "task",
+      "type": "com.example.tomasz1452.model.TaskConfigurationProperties",
+      "sourceType": "com.example.tomasz1452.model.TaskConfigurationProperties"
+    },
+    {
+      "name": "task.template",
+      "type": "com.example.tomasz1452.model.TaskConfigurationProperties$Template",
+      "sourceType": "com.example.tomasz1452.model.TaskConfigurationProperties",
+      "sourceMethod": "getTemplate()"
+    }
+  ],
+  "properties": [
+    {
+      "name": "task.template.allow-multiple-tasks",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.example.tomasz1452.model.TaskConfigurationProperties$Template"
+    }
+  ],
+  "hints": []
+}
