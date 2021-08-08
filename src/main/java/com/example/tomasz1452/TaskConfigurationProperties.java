@@ -1,4 +1,4 @@
-package com.example.tomasz1452.model;
+package com.example.tomasz1452;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

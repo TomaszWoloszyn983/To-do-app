@@ -1,5 +1,7 @@
-package com.example.tomasz1452.model;
+package com.example.tomasz1452.adapter;
 
+import com.example.tomasz1452.model.Task;
+import com.example.tomasz1452.model.TaskRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -43,6 +45,19 @@ public interface SqlTaskRepository extends TaskRepository, JpaRepository<Task, I
     @Override
     @Query(nativeQuery = true, value = "select count (*) > 0 from tasks where id=:id")
     boolean existsById(@Param("id")Integer id);
+
+    /**
+     * Zapytanie do bazy danych o to czy w grupie zadań znajduje się jakieś
+     * zadanie które ma status niewykonanego.
+     * Jako parametr podajemy chyba Id grupy.
+     *
+     * Dodoajemy tą metodę do reposytorium zadać TaskRepository.
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    boolean existsByDoneIsFalseAndGroup_Id(Integer id);
 
     /*
     Nadpisanie dwóch poniższych metod delete() powoduje że poprzez

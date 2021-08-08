@@ -1,6 +1,6 @@
 package com.example.tomasz1452.controller;
 
-import com.example.tomasz1452.model.TaskConfigurationProperties;
+import com.example.tomasz1452.TaskConfigurationProperties;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -4692,3 +4692,7 @@ java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supporte
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
 	at java.base/java.lang.Thread.run(Thread.java:829)
+2021-08-08 08:14:46 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "DESCRIPTION[*] DESCRIPTION TASKS"; oczekiwano "DELETE, DROP, DECLARE, DEALLOCATE"
+Syntax error in SQL statement "DESCRIPTION[*] DESCRIPTION TASKS"; expected "DELETE, DROP, DECLARE, DEALLOCATE"; SQL statement:
+DESCRIPTION DESCRIPTION TASKS [42001-200]
