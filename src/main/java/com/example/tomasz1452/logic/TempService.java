@@ -12,7 +12,12 @@ import java.util.stream.Collectors;
 public class TempService {
     @Autowired
     List<String> temp(TaskGroupRepository repository){
-        // Fix
+        /* Poniższy kod jest ponoć niebyt dobray i wydajny.
+           gdyż powoduje wysłanie n+1 zapytań, czy jakoś tak
+           w każdym razie w klasie SqlTaskGroupRepository mamy
+           lepsze rozwiazanie tego, za pomocą wysyłania zapytań
+           za pomoca encji Hybernatowaych.
+        */
         return repository.findAll().stream()
                 .flatMap(taskGroup -> taskGroup.getTasks().stream())
                 .map(Task::getDescription)
