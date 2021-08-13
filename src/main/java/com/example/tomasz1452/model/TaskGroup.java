@@ -36,7 +36,7 @@ public class TaskGroup {
     private Project project;
 
 
-    TaskGroup(){}
+    public TaskGroup(){}
 
 
     public int getId() {
@@ -51,7 +51,7 @@ public class TaskGroup {
         return description;
     }
 
-    void setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 

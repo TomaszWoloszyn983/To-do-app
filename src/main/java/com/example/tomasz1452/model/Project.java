@@ -4,6 +4,16 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
+/**
+ * Definiujemy tutaj Project czyli grupę zadań na którą będą składały się
+ * pomniejsze podzadania (ProjectStep) konieczne do wykonania całego zadania z projektu.
+ *
+ * Aby utwerzyć tę klasę musieliśmy dodać nowe tabele do naszej Hybernate'owej bazy
+ * danych. Dokonałiśmy tego w pliku mirgacji danych V6__
+ * Na potrzeby tej klasy dodaliśmy tylko dwie nowe tabele które musi posiadać
+ * klasa Project, czyli id i description.
+ * Migracja zawiara też inne tabele, które będą słóżyły klasie ProjectStep.
+ */
 @Entity
 @Table(name = "projects")
 public class Project {

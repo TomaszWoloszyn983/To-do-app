@@ -3,6 +3,12 @@ package com.example.tomasz1452.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+/**
+ * Klasa definiuje podzadania konieczne do wykonania zadania głównego
+ * Poza elementami jak Id oraz description, które zawiera także project
+ * posiada jeszcze zmienną deadline, która określa ile dni zostaje nam
+ * na wykonanie tego zadania.
+ */
 @Entity
 @Table(name = "project_steps")
 public class ProjectStep {

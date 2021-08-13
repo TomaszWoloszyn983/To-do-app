@@ -41,6 +41,19 @@ public class Task{
 
     Task(){}
 
+    /**
+     * Ten konstruktor tworzymy na potrzeby klas GroupTaskReadModel
+     * oraz GroupTaskWriteModel. Nie zawiera w parametrach zmiennej
+     * done, ponieważ zakładamy że nowo utworzone zadanie nie może
+     * być od razu zrobionw.
+     *
+     * @param description
+     * @param deadline
+     */
+    public Task(String description, LocalDateTime deadline) {
+        this.description = description;
+        this.deadline = deadline;
+    }
 
     public int getId() {
         return id;
