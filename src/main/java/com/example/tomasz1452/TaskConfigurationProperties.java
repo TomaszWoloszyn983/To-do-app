@@ -40,10 +40,10 @@ public class TaskConfigurationProperties {
         Utworzenie tej klasy było zadaniem samodzielnym.
         Trzeba zajrzec do pliku application.properties i obczaić
         task.template.allowMultipleTasks: false następnie
-        doposować do tego kod aby to wyrażenie działało.
+        dopasować do tego kod aby to wyrażenie działało.
         Zadanie było dość ciekawe więc podaję opis.
 
-        Przedewszystkim nie wiedziłem gdzie znaleść pierwszy człon:
+        Przedewszystkim nie wiedziałem gdzie znaleść pierwszy człon:
         task. Okazało sie że ta klasa ma adnotację springową task.
 
         Dalej trzeba było wewnątrz tej klasy utworzyć nową statyczną
