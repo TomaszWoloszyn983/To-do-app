@@ -135,7 +135,8 @@ class ProjectServiceTest {
         var mockRepository = mock(ProjectRepository.class);
         when(mockRepository.findById(anyInt()))
                 .thenReturn(Optional.of(
-                         projectWith("bar", Set.of(-1, -2))));
+                         projectWith("bar", Set.of(-1, -2))
+                ));
 //        and
         inMemoryGroupRepository inMemoryGroupRepo = inMemoryGroupRepository();
         int countBeforeCall = inMemoryGroupRepo.count();
@@ -149,9 +150,11 @@ class ProjectServiceTest {
 
 //        then
 //        assertThat(result)
-        assertThat(countBeforeCall +1).isNotEqualTo(inMemoryGroupRepo.count());
+        assertThat(result.getDescription()).isEqualTo("bar");
         assertThat(result.getDeadline()).isEqualTo(today.minusDays(1));
-//        assertThat(result.getTasks()).allMatch(task -> getDescription().equals("foo"));
+        assertThat(result.getTasks())
+//                .isEqualTo(today.minusDays(1));
+                .allMatch(task -> task.getDescription().equals("foo"));
         assertThat(countBeforeCall + 1)
                 .isNotEqualTo(inMemoryGroupRepo.count());
     }
