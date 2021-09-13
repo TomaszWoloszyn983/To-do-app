@@ -36,12 +36,12 @@ class TaskGroupService {
      * Tutaj chodzi o to aby po wykonaniu wszystkich zadań w grupie zadań, cała grupa była
      * zazanaczana na odchaczoną/wykonaną.
      *
-     * Najpierw przeszukujemy repozytorium ttasków w poszkiwaniu niewykonanych tasków i jeśli taki
+     * Najpierw przeszukujemy repozytorium tasków w poszkiwaniu niewykonanych tasków i jeśli taki
      * znajdziemy wyrzucamy bład.
      *
-     * Dalej szukamy grupy taskóew o podanym Id jeśli nie ma takiej to Błąd
+     * Dalej szukamy grupy tasków o podanym Id jeśli nie ma takiej to Błąd
      *
-     * NA końcu jeśli grupa nie jest jeszcze odchaczona to odchaczamy ją.
+     * Na końcu jeśli grupa nie jest jeszcze odchaczona to odchaczamy ją.
      *
      * @param groupId
      */
