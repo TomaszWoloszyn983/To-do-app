@@ -1,6 +1,7 @@
-package com.example.tomasz1452.model;
+package com.example.tomasz1452.logic;
 
 import com.example.tomasz1452.TaskConfigurationProperties;
+import com.example.tomasz1452.model.*;
 import com.example.tomasz1452.model.projection.GroupReadModel;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -5,12 +5,11 @@ import com.example.tomasz1452.model.TaskGroupRepository;
 import com.example.tomasz1452.model.TaskRepository;
 import com.example.tomasz1452.model.projection.GroupReadModel;
 import com.example.tomasz1452.model.projection.GroupWriteModel;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+
 class TaskGroupService {
     private TaskGroupRepository repository;
     private TaskRepository taskRepository;

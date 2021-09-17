@@ -10,4 +10,8 @@ class TodoAppApplicationTests {
 	void contextLoads() {
 	}
 
+//	@Test
+//	new TestConfiguration(){}
+//	Moje próba dodania
+
 }
