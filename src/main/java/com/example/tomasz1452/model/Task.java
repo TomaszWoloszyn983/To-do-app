@@ -41,6 +41,10 @@ public class Task{
 
     Task(){}
 
+    public Task(String description, LocalDateTime deadline){
+        this(description, deadline, null);
+    }
+
     /**
      * Ten konstruktor tworzymy na potrzeby klas GroupTaskReadModel
      * oraz GroupTaskWriteModel. Nie zawiera w parametrach zmiennej
@@ -50,9 +54,12 @@ public class Task{
      * @param description
      * @param deadline
      */
-    public Task(String description, LocalDateTime deadline) {
+    public Task(String description, LocalDateTime deadline, TaskGroup group) {
         this.description = description;
         this.deadline = deadline;
+        if(group != null){
+            this.group = group;
+        }
     }
 
     public int getId() {

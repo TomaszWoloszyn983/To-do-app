@@ -11,9 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -39,7 +37,7 @@ class ProjectServiceTest {
 
         TaskConfigurationProperties mockConfig = configurationReturning(false);
 
-        var toTest = new ProjectService(null, mockGroupRepository, mockConfig);
+        var toTest = new ProjectService(null, mockGroupRepository, mockConfig, null);
 
 //        when + then
 //        assertThatIllegalStateException().isThrownBy(() -> toTest.createGroup(LocalDateTime.now(), 0));
@@ -78,7 +76,7 @@ class ProjectServiceTest {
         // and
         TaskConfigurationProperties mockConfig = configurationReturning(true);
 
-        var toTest = new ProjectService(mockRepository, null, mockConfig);
+        var toTest = new ProjectService(mockRepository, null, mockConfig, null);
 
         var exception = catchThrowable(() -> toTest.createGroup(LocalDateTime.now(), 0));
 //        then
@@ -105,7 +103,7 @@ class ProjectServiceTest {
         //and
         TaskConfigurationProperties mockConfig = configurationReturning(true);
 
-        var toTest = new ProjectService(mockRepository, null, mockConfig);
+        var toTest = new ProjectService(mockRepository, null, mockConfig, null);
 
         var exception = catchThrowable(() -> toTest.createGroup(LocalDateTime.now(), 0));
 //        then
@@ -127,8 +125,7 @@ class ProjectServiceTest {
             testu.
             Dodaliśmy na przykład też zmienną today która jest potrzebna do
             wywołania metody createGroup itp.
-
-             */
+        */
 
 //        given
         var today = LocalDate.now().atStartOfDay();
@@ -139,11 +136,12 @@ class ProjectServiceTest {
                 .thenReturn(Optional.of(project));
 //        and
         inMemoryGroupRepository inMemoryGroupRepo = inMemoryGroupRepository();
+        var serviceWithInMemory = dummyGroupService(inMemoryGroupRepo);
         int countBeforeCall = inMemoryGroupRepo.count();
 //        and
         TaskConfigurationProperties mockConfig = configurationReturning(true);
 //        System under test
-        var toTest = new ProjectService(mockRepository, inMemoryGroupRepo, mockConfig);
+        var toTest = new ProjectService(mockRepository, inMemoryGroupRepo, mockConfig, serviceWithInMemory);
 
 //        when
         GroupReadModel result = toTest.createGroup(today, 1);
@@ -157,6 +155,37 @@ class ProjectServiceTest {
 //                .allMatch(task -> task.getDescription().equals("foo"));
         assertThat(countBeforeCall + 1)
                 .isEqualTo(inMemoryGroupRepo.count());
+    }
+
+    /** !!!!!!!!!!!!!!!!!!!!!  ZADANIE SAMODZIELNE   !!!!!!!!!!!!!!!!!!!!!!!!!!!
+     * Trzeba by jakby stworzyć repozytorium tasków, grupę, dodać task oraz
+     * w końcu zmienić jego stan na "done"
+     * @param task
+     */
+    @Test
+    @DisplayName("Should find and if exists toggle the task")
+    void toggle_existing_task(Task task){
+        // given
+        var mockRepository = mock(TaskRepository.class);
+        when(mockRepository.existsById(anyInt())).thenReturn(true);
+            /*
+            Repo tasków
+            Jeśli wywwołane zastanie zapytanie czy task i danym id istnieje
+            to zwracamy true.
+             */
+
+//        var mockTaskController = mock(TaskController.class);
+//        LocalDateTime deadline = LocalDateTime.now().plusYears(1);
+//        Task taskToToggle= new Task("To toggle", deadline);
+
+        // when
+
+    }
+
+
+
+    private TaskGroupService dummyGroupService(inMemoryGroupRepository inMemoryGroupRepo) {
+        return new TaskGroupService(inMemoryGroupRepo, null);
     }
 
     private Project projectWith(String projectDescription, Set<Integer> daysToDeadline){

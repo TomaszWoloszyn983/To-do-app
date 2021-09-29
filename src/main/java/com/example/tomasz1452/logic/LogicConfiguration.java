@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Ta klasa póki co służy tylko jako prykład zastosawonia Beana.
  * Polega to na tym że zastosowanie Bean dodaje do Springa zupełnie
- * wyjętą z kontekstu klasę. Spring sa będzie potrafił taką klasę użyć
+ * wyjętą z kontekstu klasę. Spring sam będzie potrafił taką klasę użyć
  * do tego będzie potrafił odnaleść i dociągnąć sobie też klasę
  * ProjectService pomimo że z PS usunęliśmy wszystkie Springowe
  * adnotacje.
@@ -22,8 +22,9 @@ class LogicConfiguration {
     ProjectService projectService(
             final ProjectRepository repository,
             final TaskGroupRepository taskGroupRepository,
+            final TaskGroupService taskGroupService,
             final TaskConfigurationProperties config){
-        return new ProjectService(repository, taskGroupRepository, config);
+        return new ProjectService(repository, taskGroupRepository, config, taskGroupService);
     }
 
     @Bean

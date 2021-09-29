@@ -119,7 +119,7 @@ class TaskController {
 //         @PathVariable (zmienna ścieżki) jest pobierana z adresu url
 //         /tasks/{id} i automatycznie konwertowana na zmienną typu int.
 
-            Ogolnie działanie motody poalega na tym że otrzymujemy odpowiedź
+            Ogolnie działanie metody polega na tym że otrzymujemy odpowiedź
             z serwera @PathVariable pobiera z adresu Id taska. Jesli task o takim
             Id nie istnieje zostaje zwrócone notFound. W przeciwnym razie nadajemy
             taskowi nowe ID (setId())
@@ -135,7 +135,7 @@ class TaskController {
 
         repository.findById(id)
                 .ifPresent(task -> task.setDone(!task.isDone()));
-    //               Jeśłi zadanie o danym id istnieje w tabeli, to zmieniamy jego stan
+    //               Jeśli zadanie o danym id istnieje w tabeli, to zmieniamy jego stan
     //               na przeciwny do tego który był.
         /*
         Po prostu ta metoda zmienia nam stan danego taska na przeciwny.
