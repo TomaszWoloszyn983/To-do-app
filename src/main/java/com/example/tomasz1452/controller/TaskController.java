@@ -1,5 +1,6 @@
 package com.example.tomasz1452.controller;
 
+import com.example.tomasz1452.logic.TaskService;
 import com.example.tomasz1452.model.Task;
 import com.example.tomasz1452.model.TaskRepository;
 import org.slf4j.Logger;
@@ -10,9 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
 
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 
 /**
@@ -30,19 +35,27 @@ import java.util.List;
  * Metody takie jak PostMapping, GetMapping rozszerzają (RequestMapping)
  * i służą z tego co kojarzę do nadpisywania domyślnych metod do wysyłania
  * requestów do serwera
+ *
+ * W requstMapping na górze dodaliśmy parametr z członem "tasks". Jest top wspólny człon
+ * adresu dla wszystkich poniższych adnotacji więc dzięki umieszczeniu go w RM mogliśmy
+ * usunąć go z pozostałych, jako że poztałe mappingi rozszerzają requestMapping.
+ * Trzeba tylko pamiętac aby w pozostawionych członach adresu zostawić slashe.
  */
 
 
 @RestController
+@RequestMapping("/tasks")
 class TaskController {
     private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
     private final TaskRepository repository;
+    private final TaskService service;
 
-    TaskController(final TaskRepository repository) {
+    TaskController(final TaskRepository repository, TaskService service) {
         this.repository = repository;
+        this.service = service;
     }
 
-    @PostMapping("/tasks")
+    @PostMapping
     ResponseEntity<Task> createTask(@RequestBody @Valid Task toCreate) {
         Task result = repository.save(toCreate);
         return ResponseEntity.created(URI.create("/" + result.getId())).body(result);
@@ -57,10 +70,11 @@ class TaskController {
 //     */
     }
 
-    @GetMapping(value = "/tasks", params = {"!sort", "!page", "!size"})
-    ResponseEntity<List<Task>> readAllTasks() {
+    @GetMapping(params = {"!sort", "!page", "!size"})
+    CompletableFuture<ResponseEntity<List<Task>>> readAllTasks() {
         logger.warn("Exposing all the tasks!");
-        return ResponseEntity.ok(repository.findAll());
+//        return ResponseEntity.ok(repository.findAll());
+        return service.findAllAsync().thenApply(ResponseEntity::ok);
          /*
 //        params = {"!sort", "!page","!size"} oznacza że metoda zostanie wywołana jeśli
             w żadaniu nie będą podane żadne z powyższych parametrów.
@@ -70,6 +84,12 @@ class TaskController {
             jej sygnaturę, czyli np dodac parametr. Spring chyba potrafi pobrac parametr
             z metody readAllTasks i podstawic go do sygnatury GetMapping
 //         */
+    }
+
+    @GetMapping("/test")
+    void oldFashionedWay(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        System.out.println(req.getParameter("foo"));
+        resp.getWriter().println("test old-fashioned way");
     }
 
     @GetMapping("/tasks")
@@ -82,7 +102,21 @@ class TaskController {
              */
     }
 
-    @GetMapping("/tasks/{id}")
+    /**
+     * Tworzymy metodę która będzie zwracała listę zadań wykonanych.
+     * Aczkolwiek jako domyślny paramert podajemy true czyli done, jednak jeśli
+     * w parametrze state ktoś poda false to zwrócimy liste niewykonanych zadań.
+     * @param state
+     * @return
+     */
+    @GetMapping("/search/done")
+    ResponseEntity<List<Task>> readDoneTasks(@RequestParam(defaultValue = "true") boolean state){
+        return ResponseEntity.ok(
+                repository.findByDone(state)
+        );
+    }
+
+    @GetMapping("/{id}")
     ResponseEntity<Task> readTask(@PathVariable int id) {
         return repository.findById(id)
                 .map(ResponseEntity::ok)
@@ -99,7 +133,7 @@ class TaskController {
          */
     }
 
-    @PutMapping("/tasks/{id}")
+    @PutMapping("/{id}")
     ResponseEntity<?> updateTask(@PathVariable int id, @RequestBody @Valid Task toUpdate) {
         if (!repository.existsById(id)) {
             return ResponseEntity.notFound().build();
@@ -127,7 +161,7 @@ class TaskController {
     }
 
     @Transactional
-    @PatchMapping("/tasks/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<?> toggleTask(@PathVariable int id) {
         if (!repository.existsById(id)) {
             return ResponseEntity.notFound().build();

@@ -3,6 +3,7 @@ package com.example.tomasz1452.controller;
 import com.example.tomasz1452.TaskConfigurationProperties;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  * był tylko przykład.
  */
 @RestController
+@RequestMapping("/info")
 class InfoController {
 //    @Value("${spring.datasource.url}")
 //    private String url;
@@ -39,12 +41,12 @@ class InfoController {
         this.myProp = myProp;
     }
 
-    @GetMapping("/info/url")
+    @GetMapping("/url")
     String url(){
         return dataSource.getUrl();
     }
 
-    @GetMapping("/info/prop")
+    @GetMapping("/prop")
     boolean myProp(){
         return myProp.getTemplate().isAllowMultipleTasks();
     }
