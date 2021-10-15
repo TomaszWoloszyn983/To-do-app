@@ -59,6 +59,9 @@ public interface SqlTaskRepository extends TaskRepository, JpaRepository<Task, I
     @Override
     boolean existsByDoneIsFalseAndGroup_Id(Integer id);
 
+    @Override
+    List<Task> findAllByGroup_Id(Integer groupId);
+
     /*
     Nadpisanie dwóch poniższych metod delete() powoduje że poprzez
     wywoływanie żądań delete w postmanie nie będziemy mogli usuwać

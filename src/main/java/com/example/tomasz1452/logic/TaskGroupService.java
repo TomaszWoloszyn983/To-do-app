@@ -35,7 +35,7 @@ public class TaskGroupService {
      * Tutaj chodzi o to aby po wykonaniu wszystkich zadań w grupie zadań, cała grupa była
      * zazanaczana na odchaczoną/wykonaną.
      *
-     * Najpierw przeszukujemy repozytorium tasków w poszkiwaniu niewykonanych tasków i jeśli taki
+     * Najpierw przeszukujemy repozytorium tasków w poszukiwaniu niewykonanych tasków i jeśli taki
      * znajdziemy wyrzucamy bład.
      *
      * Dalej szukamy grupy tasków o podanym Id jeśli nie ma takiej to Błąd

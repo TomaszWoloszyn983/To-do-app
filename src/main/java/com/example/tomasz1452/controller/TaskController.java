@@ -62,7 +62,7 @@ class TaskController {
          /*
          @RequestBody mapuje otrzymaną ze stony serwera zawartość JSonową na odpowiedni
          format javowy. Dzieki tamu ze Spring automatycznie rozpoznaję formaty
-         samodzielnie dobiera odpoweidnie konwersje. W tym przypadku otrzymaną
+         samodzielnie dobiera odpowiednie konwersje. W tym przypadku otrzymaną
          z adresu /tasks odpowedź mapuje na format Task.
 
          Adnotacje RequestMapping i GetMapping w tym przypadku działają
@@ -77,10 +77,10 @@ class TaskController {
         return service.findAllAsync().thenApply(ResponseEntity::ok);
          /*
 //        params = {"!sort", "!page","!size"} oznacza że metoda zostanie wywołana jeśli
-            w żadaniu nie będą podane żadne z powyższych parametrów.
-            W poniżeszej, przeciążonej metodzie nie ma tego warunku i Spring
-            będzie szukał parametrów. W tym przypadku znajdzie on parametr page (pageble)
-            To dośź skomplikowane, ale żeby przeciążyć metodę readAllTasks musieliśmy zmienić
+            w żądaniu nie będą podane żadne z powyższych parametrów.
+            W poniższej, przeciążonej metodzie nie ma tego warunku i Spring
+            będzie szukał parametrów. W tym przypadku znajdzie on parametr page (pageable)
+            To dość skomplikowane, ale żeby przeciążyć metodę readAllTasks musieliśmy zmienić
             jej sygnaturę, czyli np dodac parametr. Spring chyba potrafi pobrac parametr
             z metody readAllTasks i podstawic go do sygnatury GetMapping
 //         */

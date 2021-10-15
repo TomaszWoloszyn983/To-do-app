@@ -12,10 +12,10 @@ import java.util.Optional;
  * Definiujemy tutaj metody, które będą nam potrzebne do wysyłania żądań
  * do serwera.
  * TaskRepository jest interfacem dlatego implemetując go uzyskujemy
- * dostęp do jego metod którę sa abstrakcyjne.
+ * dostęp do jego metod które są abstrakcyjne.
  *
  * Co okazało się ważne, należy zachować odpowiednią kolejność
- * przy trorzeniu klas Task i TaskRepo oraz dodawaniu adnotacji
+ * przy tworzeniu klas Task i TaskRepo oraz dodawaniu adnotacji
  * do nich.
  */
 public interface TaskRepository {
@@ -26,6 +26,8 @@ public interface TaskRepository {
     boolean existsByDoneIsFalseAndGroup_Id(Integer id);
     Task save(Task entity);
     List<Task> findByDone(@Param("state") boolean done);
+//    List<Task> findAllByGroupId(Integer id);  - to moja wersja,
+//                                          ale oczywiście w kursie jest troche inaczej.
 
-
+    List<Task> findAllByGroup_Id(Integer groupId);
 }
