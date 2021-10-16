@@ -4895,3 +4895,7 @@ ID [42001-200]
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ID[*]"; oczekiwano "INSERT"
 Syntax error in SQL statement "ID[*]"; expected "INSERT"; SQL statement:
 ID [42001-200]
+2021-10-15 08:42:54 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "SELECT * FROM TASK_GROUPS FALSE[*]"
+Syntax error in SQL statement "SELECT * FROM TASK_GROUPS FALSE[*]"; SQL statement:
+SELECT * FROM TASK_GROUPS FALSE [42000-200]

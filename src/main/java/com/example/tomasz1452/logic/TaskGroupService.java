@@ -1,5 +1,6 @@
 package com.example.tomasz1452.logic;
 
+import com.example.tomasz1452.model.Project;
 import com.example.tomasz1452.model.TaskGroup;
 import com.example.tomasz1452.model.TaskGroupRepository;
 import com.example.tomasz1452.model.TaskRepository;
@@ -19,8 +20,11 @@ public class TaskGroupService {
         this.taskRepository = taskRepository;
     }
 
-    public GroupReadModel createGroup(GroupWriteModel source){
-        TaskGroup result = repository.save(source.toGroup());
+    public GroupReadModel createGroup(final GroupWriteModel source){
+        return createGroup(source, null);
+    }
+    public GroupReadModel createGroup(GroupWriteModel targetGroup, final Project project) {
+        TaskGroup result = repository.save(targetGroup.toGroup(project));
         return new GroupReadModel(result);
     }
 
