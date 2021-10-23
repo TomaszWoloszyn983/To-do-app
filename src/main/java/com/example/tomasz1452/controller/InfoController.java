@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
  * Słabością tego formatu i tego rozwiązania jest to że jest
  * on bardzo podatny na literówki i temu podobne błędy.
  * Błąd zrobiony na przykład w spring.datasource.url byłby
- * wiodoczny dopiero w logach po wystartowaniu aplikacji.
+ * widoczny dopiero w logach po wystartowaniu aplikacji.
  * I czasem trudno byłoby odnaleść taki błąd.
  * Dlatego w następnej lekcji zapobiegliśmy powstawaniu takiego
- * błędu poprzez zasttosowanie rozwiązania z autowired.
+ * błędu poprzez zastosowanie rozwiązania z autowired.
  * Po czym tego wszytkiego i tak sie pozbywamy bo to
  * był tylko przykład.
  */

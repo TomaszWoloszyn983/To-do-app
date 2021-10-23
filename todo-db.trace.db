@@ -4899,3 +4899,11 @@ ID [42001-200]
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "SELECT * FROM TASK_GROUPS FALSE[*]"
 Syntax error in SQL statement "SELECT * FROM TASK_GROUPS FALSE[*]"; SQL statement:
 SELECT * FROM TASK_GROUPS FALSE [42000-200]
+2021-10-20 08:59:31 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "DELETE *[*] FROM PROJECTS"; oczekiwano "identifier"
+Syntax error in SQL statement "DELETE *[*] FROM PROJECTS"; expected "identifier"; SQL statement:
+DELETE * FROM PROJECTS [42001-200]
+2021-10-20 09:00:57 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "DELETE  *[*] FROM PROJECTS"; oczekiwano "identifier"
+Syntax error in SQL statement "DELETE  *[*] FROM PROJECTS"; expected "identifier"; SQL statement:
+DELETE  * FROM PROJECTS [42001-200]

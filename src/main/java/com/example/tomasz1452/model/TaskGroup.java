@@ -11,8 +11,8 @@ import java.util.Set;
  tą klasą można było jednocześnie zarządzać jakąś grupą zadań.
  Dodojąc w klasie Task odnotację @ManyToOne przyporządkowujemy Task to
  do jakies grupy (na tym etapie jeszcze nie wiem co i jak).
- W tej klasie dodaliśmy za to adnotację @OneToMany, któa wydaje się
- logocznie wizać z ManyToOne w klasie Task.
+ W tej klasie dodaliśmy za to adnotację @OneToMany, która wydaje się
+ logocznie wiązać z ManyToOne w klasie Task.
  */
 
 @Entity
