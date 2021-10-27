@@ -4,6 +4,7 @@ import com.example.tomasz1452.model.Task;
 import com.example.tomasz1452.model.TaskGroup;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,6 +22,7 @@ public class GroupReadModel {
         description = source.getDescription();
         source.getTasks().stream()
                 .map(Task::getDeadline)
+                .filter(Objects::nonNull) // To odfiltrowanie dodaliśmy w wyniku testu w GroupReadModelTest.
                 .max(LocalDateTime::compareTo)
                 .ifPresent((date -> deadline = date));
 //        Tutaj pobieramy ostatnie zadanie z grupy o najdalszej dacie wykonania.

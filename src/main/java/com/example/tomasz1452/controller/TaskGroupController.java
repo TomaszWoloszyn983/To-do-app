@@ -1,21 +1,23 @@
 package com.example.tomasz1452.controller;
 
 import com.example.tomasz1452.logic.TaskGroupService;
-import com.example.tomasz1452.model.Task;
-import com.example.tomasz1452.model.TaskGroup;
-import com.example.tomasz1452.model.TaskGroupRepository;
-import com.example.tomasz1452.model.TaskRepository;
-import com.example.tomasz1452.model.projection.GroupReadModel;
-import com.example.tomasz1452.model.projection.GroupWriteModel;
+import com.example.tomasz1452.model.*;
+import com.example.tomasz1452.model.projection.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.attribute.standard.Media;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -39,8 +41,8 @@ import java.util.List;
  *  Moja metoda toggle group działa na moim repozytorium grup. Podczas gdy
  *  metoda z kursu zwraca bładd 500.
  */
-@RestController
-@RequestMapping("/task_groups")
+@Controller
+@RequestMapping("/groups")
 class TaskGroupController {
 
     private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
@@ -59,18 +61,25 @@ class TaskGroupController {
 //        this.taskRepository = taskRepository;
 //    }
 
-    @PostMapping
+    /*
+    produces, consumes zonacz chyba jakiego typu dane pobiera metoda oraz jakiego typu
+    dane zwraca. W ponizszym przypadku jest to JSON.
+     */
+    @ResponseBody
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<GroupReadModel> createGroup(@RequestBody @Valid GroupWriteModel toCreate){
         GroupReadModel result = service.createGroup(toCreate);
         return ResponseEntity.created(URI.create("/"+result.getId())).body(service.createGroup(toCreate));
     }
 
-    @GetMapping()
+    @ResponseBody
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<GroupReadModel>> readAllGroups() {
         logger.warn("Displaying all Taskgroups!");
         return ResponseEntity.ok(service.readAll());
     }
 
+    @ResponseBody
     @Transactional
     @PatchMapping("/{id}")
     public ResponseEntity<?> toggleGroup(@PathVariable int id) {
@@ -94,7 +103,8 @@ class TaskGroupController {
      * @param id
      * @return
      */
-    @GetMapping("/{id}")
+    @ResponseBody
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Task>> readTasksFromGroup(@PathVariable int id){
 
 //        TaskGroup result = repository.findById(id).orElseThrow(() -> new IllegalArgumentException(
@@ -117,6 +127,57 @@ class TaskGroupController {
 //
 //        return ResponseEntity.noContent().build();
 //    }
+
+    /**
+     * Zadanie samodzielne.
+     * Próbuję tutaj utworzyć metodę dodającą taski do taksgrupy.
+     * Robię to w oparciu o dodawanie stepów do projektów w klasie ProjectController
+     *
+     * A więc tak jakby wysyłamy żadanie Post z parametrem addTask
+     *
+     * @return
+
+    @PostMapping(produces = MediaType.APPLICATION_FORM_URLENCODED_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    String addTaskToGroup(@ModelAttribute("group") GroupWriteModel current){
+//        current.getSteps().add(new ProjectStep());
+        current.getTasks().add(new GroupTaskWriteModel());
+        return "task_groups";
+    }
+     */
+
+    @GetMapping(produces = MediaType.TEXT_HTML_VALUE)
+    String showGroups(Model model){
+        model.addAttribute("group", new GroupWriteModel());
+        return "groups";
+    }
+
+    @PostMapping(params = "addTask", produces = MediaType.TEXT_HTML_VALUE)
+    String addGroupTask(@ModelAttribute("group") GroupWriteModel current){
+        current.getTasks().add(new GroupTaskWriteModel());
+        return "groups";
+    }
+
+    @PostMapping(produces = MediaType.TEXT_HTML_VALUE, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    String addGroup(
+            @ModelAttribute("group") @Valid GroupWriteModel current,
+            BindingResult bindingResult,
+            Model model){
+
+        if(bindingResult.hasErrors()){
+            return "groups";
+        }
+
+        service.createGroup(current);
+        model.addAttribute("group", new GroupWriteModel());
+        model.addAttribute("groups", getGroups());
+        model.addAttribute("message", "Dodano grupę!");
+        return "groups";
+    }
+
+    @ModelAttribute("groups")
+    List<GroupReadModel> getGroups(){
+        return service.readAll();
+    }
 
     /*
     Poniżej mamy ExceptionHandlery do błędów które sa automatycznie wywołaywane
