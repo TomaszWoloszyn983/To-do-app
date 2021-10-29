@@ -42,6 +42,7 @@ import java.util.Set;
  *  metoda z kursu zwraca bładd 500.
  */
 @Controller
+@IllegalExceptionProcessing
 @RequestMapping("/groups")
 class TaskGroupController {
 
