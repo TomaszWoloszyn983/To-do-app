@@ -121,4 +121,10 @@ class ProjectController {
 
         return "projects";
     }
+    /*
+    Adnotacja Timed monitoruje statystykidziałania poadanej w parametrze metody.
+    Tutaj jako argument podaliśmy metodę percentile która pokazuje nam w jakim czasie
+    została wykonana ta metoda dla 0,5 najwydajniejszych urzytkowników, dla 0,95 oraz dla
+    0,99 najwydajniejszych (czyli w praktyce tych najmniej wydajnych).
+     */
 }
