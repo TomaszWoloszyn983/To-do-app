@@ -4,9 +4,14 @@ package com.example.tomasz1452.aspect;
 import com.example.tomasz1452.model.ProjectService;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,15 +27,21 @@ import org.springframework.stereotype.Component;
 @Component
 class LogicAspect {
 
+    private static final Logger logger = LoggerFactory.getLogger(LogicAspect.class);
     private final Timer projectCreateGroupTimer;
 
     LogicAspect(final MeterRegistry registry){
         projectCreateGroupTimer = registry.timer("model.project.create.group");
     }
 
+    @Pointcut("execution(* com.example.tomasz1452.model.ProjectService.createGroup(..))")
+    static void projectServiceCreateGroup(){
+
+    }
+
         /*
         Znaczek * na początku oznacza dowolną metode z podanej lokalizacji.
-        W tym przypadku dprecyzowaliśmy że chcemy metodę createGroup()
+        W tym przypadku doprecyzowaliśmy że chcemy metodę createGroup()
         Dwie .. kropki znaczają że pobieramy wersję metody z dwoma parametrami.
         Aby jeszcze bardziej doprecyzować można dodać np. zapis && @annotation(@overrride)
         w takim przypadku dodamy że chodzi nam o metode która posiada konkretną adnotację.
@@ -48,6 +59,10 @@ class LogicAspect {
                 throw new RuntimeException(e);
             }
         });
+    }
 
+    @Before("execution(* com.example.tomasz1452.model.ProjectService.createGroup(..))")
+    void logMethodCall(JoinPoint jp){
+        logger.info("Before {} with {}", jp.getSignature().getName(), jp.getArgs());
     }
 }
