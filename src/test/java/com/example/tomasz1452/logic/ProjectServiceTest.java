@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
+import javax.xml.crypto.dsig.spec.HMACParameterSpec;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -261,6 +262,12 @@ class ProjectServiceTest {
             return map.values().stream()
                     .filter(group -> !group.isDone())
                     .anyMatch(group -> group.getProject() != null && group.getProject().getId() == projectId);
+        }
+
+        @Override
+        public boolean existsByDescription(String description) {
+            return map.values().stream()
+                    .anyMatch(group -> group.getDescription().equals(description));
         }
     }
 }

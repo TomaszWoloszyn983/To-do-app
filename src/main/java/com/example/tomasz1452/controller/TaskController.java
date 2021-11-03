@@ -5,6 +5,7 @@ import com.example.tomasz1452.model.Task;
 import com.example.tomasz1452.model.TaskRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -47,10 +48,12 @@ import java.util.concurrent.CompletableFuture;
 @RequestMapping("/tasks")
 class TaskController {
     private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
+    private final ApplicationEventPublisher eventPublisher;
     private final TaskRepository repository;
     private final TaskService service;
 
-    TaskController(final TaskRepository repository, TaskService service) {
+    TaskController(ApplicationEventPublisher eventPublisher, final TaskRepository repository, TaskService service) {
+        this.eventPublisher = eventPublisher;
         this.repository = repository;
         this.service = service;
     }
@@ -168,7 +171,11 @@ class TaskController {
         }
 
         repository.findById(id)
-                .ifPresent(task -> task.setDone(!task.isDone()));
+                .map(Task::toggle)
+                .ifPresent(eventPublisher::publishEvent);
+
+//        repository.findById(id)
+//                .ifPresent(task -> task.setDone(!task.isDone()));
     //               Jeśli zadanie o danym id istnieje w tabeli, to zmieniamy jego stan
     //               na przeciwny do tego który był.
         /*
