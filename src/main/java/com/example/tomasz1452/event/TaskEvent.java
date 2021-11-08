@@ -13,11 +13,11 @@ public abstract class TaskEvent {
     }
 
     private int taskId;
-    private Instant occurence;
+    private Instant occurrence;
 
     TaskEvent(final int taskId, Clock clock){
         this.taskId = taskId;
-        this.occurence = Instant.now(clock);
+        this.occurrence = Instant.now(clock);
             /*
             occurance jest czasem wykonania się wydarzenia.
             Pobierając ten czas za pomocą klasy Clock możemy
@@ -26,19 +26,19 @@ public abstract class TaskEvent {
              */
     }
 
-    int getTaskId() {
+    public int getTaskId() {
         return taskId;
     }
 
-    Instant getOccurence() {
-        return occurence;
+    public Instant getOccurrence() {
+        return occurrence;
     }
 
     @Override
     public String toString() {
         return getClass().getSimpleName()+ " {" +
                 "taskId=" + taskId +
-                ", occurence=" + occurence +
+                ", occurence=" + occurrence +
                 '}';
     }
 }
